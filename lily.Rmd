@@ -68,8 +68,21 @@ renderPlotly({
 dados_tbl() %>% 
 ggplot(aes(x = date, y = adjusted)) +
 geom_line(color = "purple")  
-  
 })
+  
+```
+
+
+### Gráfico todas ações
+
+```{r}
+renderPlotly(
+  tq_get(c("PETR4.SA", "BBAS3.SA", "VALE3.SA", "WEGE3.SA")) %>%
+    group_by(symbol) %>%
+    mutate(cotacao = (adjusted - mean(adjusted))/ sd(adjusted))%>%     ungroup()%>% 
+    ggplot(aes(x=date, y=cotacao, color = symbol)) +
+    geom_line()  
+  )
   
 ```
 
